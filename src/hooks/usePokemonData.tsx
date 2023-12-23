@@ -26,7 +26,6 @@ export function usePokemonData() {
       },
     },
   );
-  console.log(data)
   return {
     pokemonFilterType,
     pokemonSearch,

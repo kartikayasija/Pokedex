@@ -50,7 +50,6 @@ const PokemonFeed: React.FC = () => {
           <SearchCard />
         ) : (
           <>
-          {console.log(data)}
             {data &&
               data.pages.map((page, idx) =>
                 page.map((pokemon, pokemonIdx) => (
