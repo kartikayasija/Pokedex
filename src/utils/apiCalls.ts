@@ -1,8 +1,20 @@
-import { AllPokemon, Pokemon } from "../constants/types";
-import { SEARCH_POKEMON } from "../constants/url";
+import { AllPokemon, Pokemon, PokemonByType, PokemonURL, Type } from "../constants/types";
+import { SEARCH_POKEMON, SEARCH_TYPE } from "../constants/url";
 
-export const getAllPokemon = (page: number): Promise<AllPokemon> =>
-  fetch(`${SEARCH_POKEMON}?limit=20&offset=${page}`).then((res) => res.json());
+export const getAllPokemon = async(page: number): Promise<PokemonURL[]> => {
+  const res = await fetch(`${SEARCH_POKEMON}?limit=20&offset=${page}`);
+  const data = await res.json() as AllPokemon;
+  return data.results;
+}
 
-export const searchPokemon = (search: string|number): Promise<Pokemon> => 
+export const searchPokemon = (search: string | number): Promise<Pokemon> =>
   fetch(`${SEARCH_POKEMON}/${search}`).then((res) => res.json());
+
+export const getTypes = (): Promise<Type> =>
+  fetch(SEARCH_TYPE).then((res) => res.json());
+
+export const getPokemonByType = async (type: string): Promise<PokemonURL[]> => {
+  const res = await fetch(`${SEARCH_TYPE}/${type}`);
+  const data = await res.json() as PokemonByType;
+  return data.pokemon.map((p) => p.pokemon);
+}

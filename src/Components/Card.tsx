@@ -19,9 +19,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
     ["pokemon-search", pokemonURL.name, pokemonId],
     () => searchPokemon(pokemonId)
   );
+
+  const [imageError, setImageError] = useState(false);
   if (isLoading) {
     return (
-      <Card margin={5} width={"150px"}>
+      <Card margin={5} minWidth={"300px"} padding={5} borderRadius={"20px"}>
         <Skeleton />
       </Card>
     );
@@ -31,12 +33,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
     <>
       <Card
         margin={5}
-        width={"200px"}
+        minWidth={"300px"}
         padding={5}
         borderRadius={"20px"}
         onClick={() => setModalOpen(true)}
       >
-        <Flex justifyContent={'space-between'}>
+        <Flex justifyContent={"space-between"}>
           <Box>
             <Text fontWeight={"500"}>{capitalizeFirst(data.name)}</Text>
             {data.types.map((type, idx) => (
@@ -45,7 +47,16 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
               </Text>
             ))}
           </Box>
-          <Image boxSize="80px" src={GET_IMAGE(data.id)} alt={data.name} />
+          {!imageError ? (
+            <Image
+              boxSize="80px"
+              src={GET_IMAGE(data.id)}
+              alt={`Loading ${data.name}...`}
+              onError={()=>setImageError(true)}
+            />
+          ) : (
+            <Skeleton boxSize="80px" />
+          )}
         </Flex>
       </Card>
 

@@ -1,10 +1,11 @@
 import './App.css'
-import PokemonFeed from './Components/PokemonFeed'
-import SearchBox from './Components/SearchBox'
+import Filter from './Components/Filter'
+import Header from './Components/Header'
+import PokemonFeed from './Components/Feed'
 function App() {
   return (
     <>
-      <SearchBox />
+      <Header />
       <PokemonFeed />
     </>
   )

@@ -20,7 +20,7 @@ export type PokemonStat = {
     name: string;
     url: string;
   };
-}
+};
 
 export type PokemonURL = {
   name: string;
@@ -32,4 +32,16 @@ export type AllPokemon = {
   count: number;
   previous: string | null;
   next: string | null;
+};
+
+export type Type = {
+  count: number;
+  next: string;
+  results: PokemonURL[];
+};
+
+export type PokemonByType = {
+  pokemon: { pokemon: PokemonURL }[];
+  name: string;
+  id: number;
 };

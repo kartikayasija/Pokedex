@@ -1,9 +1,11 @@
-import { Skeleton as ChakraSkeleton } from '@chakra-ui/react'
+import { Skeleton as ChakraSkeleton, SkeletonProps } from '@chakra-ui/react'
 
-const Skeleton: React.FC = () => {
+
+
+const Skeleton: React.FC<SkeletonProps> = (props) => {
   return (
     <>
-      <ChakraSkeleton height={'100px'} width={'100%'} margin={4}/>
+      <ChakraSkeleton {...props} margin={2}/>
     </>
   )
 }

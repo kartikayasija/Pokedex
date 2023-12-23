@@ -6,6 +6,7 @@ export const pokemonSlice = createSlice({
   initialState: {
     pokemonSearch: [] as Pokemon[],
     pokemonFeed: [] as PokemonURL[],
+    pokemonFilterType : "" as string,
   },
   reducers:{
     setPokemonSearch: (state, action) => {
@@ -14,8 +15,11 @@ export const pokemonSlice = createSlice({
     setPokemonFeed: (state, action) => {
       state.pokemonFeed += action.payload;
     },
+    setPokemonFilterType: (state, action) => {
+      state.pokemonFilterType = action.payload;
+    }
   }
 });
 
-export const { setPokemonSearch,setPokemonFeed } = pokemonSlice.actions;
+export const { setPokemonSearch, setPokemonFeed, setPokemonFilterType } = pokemonSlice.actions;
 export default pokemonSlice.reducer;
