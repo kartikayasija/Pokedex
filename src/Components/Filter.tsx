@@ -18,7 +18,6 @@ const Filter: React.FC = () => {
       return;
     }
     dispatch(setPokemonFilterType(typeNumber));
-    console.log(typeNumber);
   };
   if (error) return <Error />;
 

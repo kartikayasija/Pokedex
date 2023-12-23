@@ -1,4 +1,3 @@
-import PokemonCard from "./Card";
 import { Box, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -6,6 +5,7 @@ import Spinner from "./loader/Spinner";
 import { usePokemonData } from "../hooks/usePokemonData";
 import { useAppSelector } from "../hooks/useAppSelector";
 import SearchCard from "./SearchCard";
+import GetDetails from "./GetDetails";
 
 const PokemonFeed: React.FC = () => {
   const { ref, inView } = useInView();
@@ -22,10 +22,10 @@ const PokemonFeed: React.FC = () => {
   } = usePokemonData();
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage && data) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage, data]);
 
   if (isLoading)
     return (
@@ -50,10 +50,11 @@ const PokemonFeed: React.FC = () => {
           <SearchCard />
         ) : (
           <>
+          {console.log(data)}
             {data &&
               data.pages.map((page, idx) =>
                 page.map((pokemon, pokemonIdx) => (
-                  <PokemonCard
+                  <GetDetails
                     key={idx * 1000 + pokemonIdx}
                     pokemonURL={pokemon}
                   />

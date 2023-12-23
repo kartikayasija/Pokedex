@@ -2,7 +2,9 @@ import { AllPokemon, Pokemon, PokemonByType, PokemonURL, Type } from "../constan
 import { SEARCH_POKEMON, SEARCH_TYPE } from "../constants/url";
 
 export const getAllPokemon = async(page: number): Promise<PokemonURL[]> => {
-  const res = await fetch(`${SEARCH_POKEMON}?limit=20&offset=${page}`);
+  const limit = 20;
+  const next = (page - 1) * limit;
+  const res = await fetch(`${SEARCH_POKEMON}?limit=${limit}&offset=${next}`);
   const data = await res.json() as AllPokemon;
   return data.results;
 }
@@ -17,4 +19,4 @@ export const getPokemonByType = async (type: string): Promise<PokemonURL[]> => {
   const res = await fetch(`${SEARCH_TYPE}/${type}`);
   const data = await res.json() as PokemonByType;
   return data.pokemon.map((p) => p.pokemon);
-}
+};

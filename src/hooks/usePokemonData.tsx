@@ -15,7 +15,7 @@ export function usePokemonData() {
     error,
   } = useInfiniteQuery(
     ["pokemon-feed", pokemonFilterType.length > 0 && pokemonFilterType],
-    ({ pageParam = 1 }) =>
+    ({ pageParam = 1}) =>
       pokemonFilterType.length > 0
         ? getPokemonByType(pokemonFilterType)
         : getAllPokemon(pageParam),
@@ -24,8 +24,9 @@ export function usePokemonData() {
       getNextPageParam: (_, allPages) => {
         return allPages.length + 1;
       },
-    }
+    },
   );
+  console.log(data)
   return {
     pokemonFilterType,
     pokemonSearch,

@@ -1,25 +1,20 @@
-import { useQuery } from "react-query";
-import { PokemonURL } from "../constants/types";
-import { searchPokemon } from "../utils/apiCalls";
-import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
-import { GET_IMAGE } from "../constants/url";
-import Skeleton from "./loader/Skeleton";
+import { Pokemon } from "../constants/types";
 import { useState } from "react";
-import Modal from "./ui/Modal";
-import { RenderIf } from "./ui/RenderIf";
+import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
 import { capitalizeFirst } from "../utils/capitalizeFirst";
+import { GET_IMAGE } from "../constants/url";
+import { RenderIf } from "./ui/RenderIf";
+import Modal from "./ui/Modal";
+import Skeleton from "./loader/Skeleton";
+
 type PokemonCardProps = {
-  pokemonURL: PokemonURL;
+  pokemon: Pokemon;
+  isLoading: boolean;
 };
 
-const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const pokemonId = pokemonURL.url.split("/")[6];
-  const { data, error, isLoading } = useQuery(
-    ["pokemon-search", pokemonURL.name, pokemonId],
-    () => searchPokemon(pokemonId)
-  );
+const PokeCard: React.FC<PokemonCardProps> = ({pokemon, isLoading}) => {
 
+  const [modalOpen, setModalOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
   if (isLoading) {
     return (
@@ -28,7 +23,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
       </Card>
     );
   }
-  if (error || !data) return <div>Something went wrong</div>;
   return (
     <>
       <Card
@@ -40,8 +34,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
       >
         <Flex justifyContent={"space-between"}>
           <Box>
-            <Text fontWeight={"500"}>{capitalizeFirst(data.name)}</Text>
-            {data.types.map((type, idx) => (
+            <Text>#{pokemon.id}</Text>
+            <Text fontWeight={"500"}>{capitalizeFirst(pokemon.name)}</Text>
+            {pokemon.types.map((type, idx) => (
               <Text fontSize={"sm"} key={idx}>
                 {capitalizeFirst(type.type.name)}
               </Text>
@@ -50,9 +45,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
           {!imageError ? (
             <Image
               boxSize="80px"
-              src={GET_IMAGE(data.id)}
-              alt={`Loading ${data.name}...`}
+              src={GET_IMAGE(pokemon.id)}
+              alt={`Loading ${pokemon.name}...`}
               onError={()=>setImageError(true)}
+              onLoad={()=>setImageError(false)}
             />
           ) : (
             <Skeleton boxSize="80px" />
@@ -64,11 +60,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
         <Modal
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
-          pokemon={data}
+          pokemon={pokemon}
         />
       </RenderIf>
     </>
   );
 };
 
-export default PokemonCard;
+export default PokeCard
