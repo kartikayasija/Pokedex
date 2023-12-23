@@ -9,7 +9,7 @@ const SearchCard: React.FC = () => {
     return <div>No Pokemon Matches {pokemonSearch}</div>;
   return (
     <>
-      <PokeCard pokemon={pokemonSearchResult} isLoading={false} />
+      <PokeCard pokemon={pokemonSearchResult} />
     </>
   );
 };

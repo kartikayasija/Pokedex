@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { scoreColor } from "../../constants/colorMap";
 
 type ProgressProps = {
   progress: number;
@@ -18,7 +19,7 @@ const ProgressBar: React.FC<ProgressProps> = ({ progress }) => {
         <motion.div
           style={{
             height: "100%",
-            backgroundColor: "black",
+            backgroundColor: scoreColor(progress),
           }}
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}

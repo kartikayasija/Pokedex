@@ -6,23 +6,16 @@ import { GET_IMAGE } from "../constants/url";
 import { RenderIf } from "./ui/RenderIf";
 import Modal from "./ui/Modal";
 import Skeleton from "./loader/Skeleton";
+import { cardColor } from "../constants/colorMap";
 
 type PokemonCardProps = {
   pokemon: Pokemon;
-  isLoading: boolean;
 };
 
-const PokeCard: React.FC<PokemonCardProps> = ({pokemon, isLoading}) => {
+const PokeCard: React.FC<PokemonCardProps> = ({pokemon}) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
-  if (isLoading) {
-    return (
-      <Card margin={5} minWidth={"300px"} padding={5} borderRadius={"20px"}>
-        <Skeleton />
-      </Card>
-    );
-  }
   return (
     <>
       <Card
@@ -31,6 +24,7 @@ const PokeCard: React.FC<PokemonCardProps> = ({pokemon, isLoading}) => {
         padding={5}
         borderRadius={"20px"}
         onClick={() => setModalOpen(true)}
+        bgColor={cardColor[pokemon.types[0].type.name]}
       >
         <Flex justifyContent={"space-between"}>
           <Box>

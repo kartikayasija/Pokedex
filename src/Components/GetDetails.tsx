@@ -2,6 +2,8 @@ import { useQuery } from "react-query";
 import { PokemonURL } from "../constants/types";
 import { searchPokemon } from "../utils/apiCalls";
 import PokeCard from "./PokeCard";
+import { Card } from "@chakra-ui/react";
+import Skeleton from "./loader/Skeleton";
 type PokemonCardProps = {
   pokemonURL: PokemonURL;
 };
@@ -11,12 +13,16 @@ const GetDetails: React.FC<PokemonCardProps> = ({ pokemonURL }) => {
   const { data, isLoading } = useQuery(
     ["pokemon-search", pokemonURL.name, pokemonId],
     () => searchPokemon(pokemonId)
-    );
-  return (
-    <>
-      {data && <PokeCard pokemon={data} isLoading={isLoading} />}
-    </>
   );
+
+  if (isLoading) {
+    return (
+      <Card margin={5} minWidth={"300px"} padding={5} borderRadius={"20px"}>
+        <Skeleton />
+      </Card>
+    );
+  }
+  return <>{data && <PokeCard pokemon={data} />}</>;
 };
 
 export default GetDetails;
