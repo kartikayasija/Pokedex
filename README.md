@@ -1,30 +1,101 @@
-# React + TypeScript + Vite
+# Pokemon App
+This project is a Pokemon-themed React application built with TypeScript, leveraging React Query for efficient API calls and Redux Toolkit for state management. The app features filtering, searching, infinite scrolling, and a modal for detailed Pokémon statistics.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Demo
+Demo Link - https://kartikay-pokedex.netlify.app/
 
-Currently, two official plugins are available:
+https://github.com/kartikayasija/Pokedex/assets/115306535/c131e658-c71c-4c51-8bdc-f212b84cb7d3
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Tech Stack
 
-## Expanding the ESLint configuration
+- **React**:  *A JavaScript library used to create user interfaces in a declarative and efficient way. It is a component-based front-end library.*
+- **TypeScript**:  *A superset of JavaScript that adds static typing and other features to the language.*
+- **Redux Toolkit**:  *A library that is made to simplify the creation of redux store and provide easy state management.*
+- **React Query**:  *A library for managing and caching server state in React applications.*
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Project initialization
 
-- Configure the top-level `parserOptions` property like this:
+Clone the project
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+  git clone https://github.com/kartikayasija/Pokedex
+```
+Install dependencies
+
+```bash
+  yarn
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Start Application
+```bash
+  yarn run dev
+```
+
+# Features
+
+## Filtering
+
+Easily find specific groups of Pokemon by filtering them based on their types.
+
+## Search
+
+Utilize the search box to find Pokemon by their name or id. The search functionality makes it easy to locate your favorite Pokémon or discover new ones.
+
+## Infinite Scrolling
+
+As you scroll down, additional Pokémon will be loaded, providing a smooth and continuous exploration experience.
+
+## Modal for Detailed Pokémon Statistics
+
+Get a comprehensive overview of each Pokémon by accessing detailed statistics in a modal. This feature allows you to delve into the specific attributes and characteristics of your favorite Pokémon.
+
+## Dark Mode
+
+The Pokémon Explorer App supports Dark Mode for a comfortable and visually pleasing experience in low-light environments. Toggle Dark Mode on or off in the settings to customize your viewing experience.
+
+# Project Structure
+```bash
+  |-- src
+  |   |-- Components
+  |   |   |-- Loader
+  |   |       |-- Skeleton.tsx
+  |   |       |-- Spinner.tsx
+  |   |       |-- Error.tsx
+  |   |   |-- UI
+  |   |       |-- Modal.tsx
+  |   |       |-- Progress.tsc
+  |   |       |-- Theme.tsc
+  |   |   |-- Feed.tsx
+  |   |   |-- Filter.tsx
+  |   |   |-- GetDetails.tsx
+  |   |   |-- Header.tsx
+  |   |   |-- SearchBox.tsx
+  |   |   |-- PokeCard.tsx
+  |   |   |-- SearchCard.tsx
+  |   | 
+  |   |-- Constants
+  |   |   |-- colorMap.ts
+  |   |   |-- types.ts
+  |   |   |-- url.ts
+  |   |
+  |   |-- Hooks
+  |   |   |-- useDebounce.tsx
+  |   |   |-- useAppDispatch.tsx
+  |   |   |-- useAppSelector.tsx
+  |   |   |-- usePokemonData.tsx
+  |   |   
+  |   |-- Redux
+  |   |   |-- pokemonSlice.ts
+  |   |   |-- store.ts
+  |   |
+  |   |-- Utils
+  |   |   |-- apiCalls.ts
+  |   |   |-- capitalizeFirst.ts
+  |   |   |-- theme.ts
+  |   |
+  |   |-- App.tsx
+  |   |-- index.tsx
+
+```
+
+
