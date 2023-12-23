@@ -12,10 +12,10 @@ type PokemonCardProps = {
   pokemon: Pokemon;
 };
 
-const PokeCard: React.FC<PokemonCardProps> = ({pokemon}) => {
-
+const PokeCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
+
   return (
     <>
       <Card
@@ -25,6 +25,8 @@ const PokeCard: React.FC<PokemonCardProps> = ({pokemon}) => {
         borderRadius={"20px"}
         onClick={() => setModalOpen(true)}
         bgColor={cardColor[pokemon.types[0].type.name]}
+        _hover={{ cursor: "pointer", transform: "scale(1.05)" }} // Add hover effect
+        transition="transform 0.3s ease-in-out" // Add transition for a smooth effect
       >
         <Flex justifyContent={"space-between"}>
           <Box>
@@ -41,8 +43,8 @@ const PokeCard: React.FC<PokemonCardProps> = ({pokemon}) => {
               boxSize="80px"
               src={GET_IMAGE(pokemon.id)}
               alt={`Loading ${pokemon.name}...`}
-              onError={()=>setImageError(true)}
-              onLoad={()=>setImageError(false)}
+              onError={() => setImageError(true)}
+              onLoad={() => setImageError(false)}
             />
           ) : (
             <Skeleton boxSize="80px" />
@@ -51,14 +53,10 @@ const PokeCard: React.FC<PokemonCardProps> = ({pokemon}) => {
       </Card>
 
       <RenderIf renderIf={modalOpen}>
-        <Modal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          pokemon={pokemon}
-        />
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} pokemon={pokemon} />
       </RenderIf>
     </>
   );
 };
 
-export default PokeCard
+export default PokeCard;
