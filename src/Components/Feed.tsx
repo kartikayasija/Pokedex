@@ -1,15 +1,17 @@
-import { useInfiniteQuery } from "react-query";
-import { getAllPokemon, getPokemonByType } from "../utils/apiCalls";
 import PokemonCard from "./Card";
 import { Box, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Spinner from "./loader/Spinner";
+import { usePokemonData } from "../hooks/usePokemonData";
 import { useAppSelector } from "../hooks/useAppSelector";
+import SearchCard from "./SearchCard";
 
 const PokemonFeed: React.FC = () => {
   const { ref, inView } = useInView();
-  const { pokemonFilterType } = useAppSelector((state) => state.pokemon);
+  const { pokemonSearch } = useAppSelector(
+    (s) => s.pokemon
+  );
   const {
     data,
     fetchNextPage,
@@ -17,17 +19,7 @@ const PokemonFeed: React.FC = () => {
     isFetchingNextPage,
     isLoading,
     error,
-  } = useInfiniteQuery(
-    ["pokemon-feed", pokemonFilterType.length > 0 && pokemonFilterType],
-    ({ pageParam = 1 }) => pokemonFilterType.length > 0
-        ? getPokemonByType(pokemonFilterType)
-        : getAllPokemon(pageParam),
-    {
-      getNextPageParam: (_, allPages) => {
-        return allPages.length + 1;
-      },
-    }
-  );
+  } = usePokemonData();
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -41,9 +33,9 @@ const PokemonFeed: React.FC = () => {
         <Spinner />
       </Flex>
     );
-  if (error || !data) return <div>Something went wrong</div>;
+  if (error) return <div>Something went wrong</div>;
 
-  if (data.pages.every((page) => page.length === 0)) {
+  if (data && data.pages.every((page) => page.length === 0)) {
     return (
       <Box textAlign="center" py={4}>
         No results found.
@@ -51,18 +43,31 @@ const PokemonFeed: React.FC = () => {
     );
   }
 
-
   return (
     <>
       <Flex width={"100%"} flexWrap={"wrap"} justifyContent={"center"}>
-        {data.pages.map((page, idx) =>
-          page.map((pokemon, pokemonIdx) => (
-            <PokemonCard key={idx * 1000 + pokemonIdx} pokemonURL={pokemon} />
-          ))
+        {pokemonSearch.length > 0 ? (
+          <SearchCard />
+        ) : (
+          <>
+            {data &&
+              data.pages.map((page, idx) =>
+                page.map((pokemon, pokemonIdx) => (
+                  <PokemonCard
+                    key={idx * 1000 + pokemonIdx}
+                    pokemonURL={pokemon}
+                  />
+                ))
+              )}
+          </>
         )}
       </Flex>
-      <div ref={ref} />
-      {isFetchingNextPage && <Spinner />}
+      {pokemonSearch.length <=0 && (
+        <>
+          <div ref={ref} />
+          {isFetchingNextPage && <Spinner />}
+        </>
+      )}   
     </>
   );
 };

@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Pokemon, PokemonURL } from "../constants/types";
+import { Pokemon } from "../constants/types";
 
 export const pokemonSlice = createSlice({
   name: "pokemon",
   initialState: {
-    pokemonSearch: [] as Pokemon[],
-    pokemonFeed: [] as PokemonURL[],
-    pokemonFilterType : "" as string,
+    pokemonSearch: "" as string,
+    pokemonSearchResult: {} as Pokemon,
+    pokemonFilterType: "" as string,
   },
   reducers:{
     setPokemonSearch: (state, action) => {
       state.pokemonSearch = action.payload;
     },
-    setPokemonFeed: (state, action) => {
-      state.pokemonFeed += action.payload;
-    },
     setPokemonFilterType: (state, action) => {
       state.pokemonFilterType = action.payload;
+    },
+    setPokemonSearchResult: (state, action) => {
+      state.pokemonSearchResult = action.payload;
     }
   }
 });
 
-export const { setPokemonSearch, setPokemonFeed, setPokemonFilterType } = pokemonSlice.actions;
+export const { setPokemonSearch, setPokemonFilterType, setPokemonSearchResult } = pokemonSlice.actions;
 export default pokemonSlice.reducer;
