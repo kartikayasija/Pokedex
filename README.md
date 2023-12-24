@@ -28,7 +28,7 @@ Install dependencies
 
 Start Application
 ```bash
-  yarn run dev
+  yarn dev
 ```
 
 # Features
